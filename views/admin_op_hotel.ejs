@@ -1,0 +1,142 @@
+
+
+<style>
+    body {
+      background-color: LightCyan;
+      color: black;
+      font-family: Arial, sans-serif;
+    }
+  
+    /* Style for forms */
+    form {
+      border: 2px solid black;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+  
+    /* Style for input fields */
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+  
+    button {
+      background-color: mistyrose;
+      color: purple;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  
+    /* Style for displayed information in grid */
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  
+    li {
+      border: 2px solid black;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+  
+    /* Style for displayed information labels */
+    strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+  
+  <h1>Admin Operations</h1>
+  
+  <!-- Form for inserting a new hotel (Create) -->
+  <form action="/admin_op_hotel/create" method="post">
+    <h2>Create New Hotels</h2>
+    <label for="id">ID:</label>
+    <input type="text" name="id" required>
+    <label for="name">Name:</label>
+    <input type="text" name="name" required>
+    <label for="rating">Rating:</label>
+    <input type="text" name="rating" required>
+    <label for="street">Street:</label>
+    <textarea name="street" required></textarea>
+    <label for="city">City:</label>
+    <input type="text" name="city" required>
+    <label for="pincode">Pincode:</label>
+    <input type="text" name="pincode" required>
+    <label for="image">Image Link:</label>
+    <input type="text" name="image" required>
+    <label for="district_id">District ID:</label>
+    <input type="text" name="district_id" required>
+    <label for="number">Number:</label>
+    <input type="text" name="number" required>
+    <label for="price">Price:</label>
+    <input type="text" name="price" required>
+    <button type="submit">Create</button>
+  </form>
+  
+  <!-- Display existing hotels with options to update and delete (Update and Delete) -->
+  <ul>
+    <% hotels.forEach(hotel => { %>
+      <li>
+        <!-- Display information in a grid for Update and Delete -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+          <div>
+            <p><strong>ID:</strong><%= hotel.id %></p>
+            <p><strong>Name:</strong><%= hotel.name %></p>
+            <p><strong>Rating:</strong> <%= hotel.rating %></p>
+            <p><strong>Street:</strong> <%= hotel.street %></p>
+            <p><strong>City:</strong> <%= hotel.city %></p>
+            <p><strong>Pincode:</strong> <%= hotel.pincode %></p>
+            <p><strong>Number:</strong> <%= hotel.number %></p>
+            <p><strong>Number:</strong> <%= hotel.price %></p>
+          </div>
+  
+          <!-- Form for updating a hotel -->
+          <form action="/admin_op_hotel/update" method="post">
+            <label for="id">ID:</label>
+            <input type="text" name="id" value="<%= hotel.id %>"required>
+            <label for="name">Name:</label>
+            <input type="text" name="name" value="<%= hotel.name %>" required>
+            <label for="rating">Rating:</label>
+            <input type="text" name="rating" value="<%= hotel.rating %>" required>
+            <label for="street">Street:</label>
+            <input type="text" name="street" value="<%= hotel.street %>" required>
+            <label for="city">City:</label>
+            <textarea name="city" required><%= hotel.city %></textarea>
+            <label for="pincode">Pincode:</label>
+            <input type="text" name="pincode" value="<%= hotel.pincode %>" required>
+            <label for="image">Image URL:</label>
+            <input type="text" name="image" value="<%= hotel.image_url %>" required>
+            <label for="district_id">District ID:</label>
+            <input type="text" name="district_id" value="<%= hotel.district_id %>" required>
+            <label for="number">Number:</label>
+            <input type="text" name="number" value="<%= hotel.number %>" required>
+            <label for="price">Price:</label>
+            <input type="text" name="price" value="<%= hotel.price %>" required>
+            <button type="submit">Update</button>
+          </form>
+  
+          <!-- Form for deleting a hotel -->
+          <form action="/admin_op_hotel/delete" method="post">
+            <input type="hidden" name="id" value="<%= hotel.id %>">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      </li>
+    <% }); %>
+  </ul>
+  

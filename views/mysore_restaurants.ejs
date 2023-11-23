@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurants in Mysore</title>
+  <style>
+   body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(45deg, #b3e0ff, #a3ffcc); /* Light blue to light green gradient */
+  background-size: 400% 400%;
+  animation: gradient 15s infinite alternate;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  color: #333; /* Darker text color for better readability */
+}
+
+.header {
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.restaurant-item {
+  background-color: #E0FFFF; /* Light mint green background color */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Slight shadow for better contrast */
+  margin: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 65%;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+
+
+
+
+.restaurant-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.restaurant-item.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.restaurant-image {
+  max-width: 100%;
+  max-height: 200px;
+  
+  height: auto; /* Ensure the aspect ratio is maintained */
+  display: block;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+/* Improved styling for hotel details */
+.restaurant-name {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
+
+.rating, .number, .address, .price {
+  margin: 5px 0;
+}
+
+  </style>
+</head>
+
+<body>
+  <h1 class="header">Restaurants in Mysore</h1>
+  <ul class="restaurant-list">
+    
+    <% restaurants.forEach((restaurant, index) => { %>
+      <li class="restaurant-item">
+        <h2 class="restaurant-name"><%= restaurant.name %></h2>
+        <p class="rating">Rating: <%= restaurant.rating %></p>
+        <p class="address">Address: <%= restaurant.street %>, <%= restaurant.city %> - <%= restaurant.pincode %></p>
+        <img class="restaurant-image" src="<%= restaurant.image_url %>" alt="<%= restaurant.name %>">
+      </li>
+    <% }); %>
+  </ul>
+
+  <script>
+    // Add a class "active" to the restaurant items as you scroll down to make them appear
+    const restaurantItems = document.querySelectorAll('.restaurant-item');
+
+    function checkVisible() {
+      restaurantItems.forEach((item, index) => {
+        const rect = item.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // Trigger the checkVisible function on page load and scroll
+    window.addEventListener('load', checkVisible);
+    window.addEventListener('scroll', checkVisible);
+  </script>
+</body>
+</html>

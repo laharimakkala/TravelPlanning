@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Places List</title>
+    <style>
+        /* CSS for layout */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 0 20px;
+            background-color: #f0f0f0; /* Set a background color for the whole page */
+            font-family: Arial, sans-serif; /* Define a font for the text */
+        }
+        
+        .customer-list {
+            flex: 1;
+            padding: 50px;
+            max-width: none;
+            width: 100%;
+            background-color: #fff; /* Set a white background for the list */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+            border-radius: 10px; /* Add rounded corners */
+        }
+    
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            background-color: #c5cace; /* Set a blue background for the "Places List" text */
+            color: #0c0909; /* Set white text color */
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            margin-left: 1px;
+            margin-right: 1px;
+        }
+    
+        li {
+            margin-bottom: 20px;
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 2px solid #000;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+        label {
+            display: block;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    
+        .district-image {
+            max-width: 200px; /* Set a fixed width for the district images */
+            margin-right: 20px;
+            max-height: 200px; /* Maintain the aspect ratio */
+            object-fit: cover;
+        }
+    
+        .district-details {
+            
+        flex-direction: column;
+        align-items: center; /* Center-align the district names */
+        text-align: center;
+    justify-content: center;}
+        /* Link style */
+a {
+    text-decoration: none; /* Remove underline from links */
+}
+
+/* Button style */
+.button-details {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #979fa8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Add spacing between district details and the button */
+    text-align: center; /* Center-align the button text */
+}
+
+/* Button hover effect */
+.button-details:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+    </style>
+    
+</head>
+<body>
+    
+    <div class="customer-list">
+        <h1 style="font-size: 28px; margin-bottom: 20px;">Places List</h1>
+        <ul>
+            <% districts.forEach((customer) => { %>
+                <li>
+                    <img src="<%= customer.link %>" alt="District Image" class="district-image">
+                    <div class="district-details">
+                        <span style="font-weight: bold;"><%= customer.district_name %></span>
+                    </div>
+                    <div class="button-details">
+                        <a href="/<%= customer.district_name %>">
+                            <button type="button">Details</button>
+                        </a>
+                    </div>
+                </li>
+            <% }); %>
+        
+        </ul>
+    </div>
+</body>
+</html>

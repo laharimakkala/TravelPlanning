@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotels in Mysore</title>
+  <style>
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(45deg, #b3e0ff, #a3ffcc); /* Light blue to light green gradient */
+  background-size: 400% 400%;
+  animation: gradient 15s infinite alternate;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  color: #333; /* Darker text color for better readability */
+}
+
+.header {
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.hotel-item {
+  background-color: #E0FFFF; /* Light mint green background color */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Slight shadow for better contrast */
+  margin: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 65%;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+
+
+
+
+.hotel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hotel-item.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.hotel-image {
+  max-width: 100%;
+  max-height: 200px;
+  width: 100%; /* Adjusted width to ensure responsiveness */
+  height: auto; /* Ensure the aspect ratio is maintained */
+  display: block;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+/* Improved styling for hotel details */
+.hotel-name {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
+
+.rating, .number, .address, .price {
+  margin: 5px 0;
+}
+
+
+  </style>
+</head>
+
+<body>
+  <h1 class="header">Hotels in Mysore</h1>
+  <ul class="hotel-list">
+    
+    <% hotels.forEach((hotel, index) => { %>
+      <li class="hotel-item">
+        <h2 class="hotel-name"><%= hotel.name %></h2>
+        <p class="rating">Rating: <%= hotel.rating %></p>
+        <p class="number">Contact: <%= hotel.number %></p>
+        <p class="address">Address: <%= hotel.street %>, <%= hotel.city %> - <%= hotel.pincode %></p>
+        <p class="price">Price: <%= hotel.price %></p>
+        <img class="restaurant-image" src="<%= hotel.image_url %>" alt="<%= hotel.name %>">
+      </li>
+    <% }); %>
+  </ul>
+
+  <script>
+    // Add a class "active" to the restaurant items as you scroll down to make them appear
+    const restaurantItems = document.querySelectorAll('.hotel-item');
+
+    function checkVisible() {
+      restaurantItems.forEach((item, index) => {
+        const rect = item.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // Trigger the checkVisible function on page load and scroll
+    window.addEventListener('load', checkVisible);
+    window.addEventListener('scroll', checkVisible);
+  </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mysore Aggregation</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      padding: 20px;
+      background-color: #f8f8f8;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #f0f0f0;
+      margin-top: 30px;
+      font-size: 27px;
+      text-align: center;
+      background-color: #3498db;
+    }
+
+    p {
+      color: #666;
+      text-align: center;
+    }
+
+
+
+    form label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    form input,
+    form button {
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th,
+    td {
+      border: 1px solid #3498db;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #F0F8FF;
+      color: #3498db;
+    }
+
+    button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Filter Results</h1>
+  <form action="/mysore_aggr" method="get">
+    <label for="minRating">Enter Minimum Rating of Restaurant:</label>
+    <input type="number" step="0.1" name="minRating" id="minRating" value="<%= minRating || 3.5 %>" required>
+    <br>
+    <label for="pincode">Enter Pincode:</label>
+    <input type="text" name="pincode" id="pincode" value="<%= userPincode || '' %>">
+    <button type="submit">Submit</button>
+  </form>
+
+  <% if (typeof hotelsAndRestaurants !=='undefined' && hotelsAndRestaurants.length> 0) { %>
+    <h2>Hotels and Restaurants in Pincode <%= userPincode %>
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Hotel Name</th>
+          <th>Hotel Rating</th>
+          <th>Restaurant Name</th>
+          <th>Restaurant Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% hotelsAndRestaurants.forEach(function(entry) { %>
+          <tr>
+            <td>
+              <%= entry.hotel_name %>
+            </td>
+            <td>
+              <%= entry.hotel_rating %>
+            </td>
+            <td>
+              <%= entry.restaurant_name %>
+            </td>
+            <td>
+              <%= entry.restaurant_rating %>
+            </td>
+          </tr>
+          <% }); %>
+      </tbody>
+    </table>
+    <% } else { %>
+      <p>No hotels and restaurants found in Pincode <%= userPincode %>.</p>
+      <% } %>
+        <!-- Display restaurant spots information -->
+        <% if (typeof restResults !=='undefined' && restResults.length> 0) { %>
+          <h2>Restaurant in Mysore City with Rating > <%= minRating || 3.5 %> and in pincode <%= userPincode%>
+          </h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Rating</th>
+                <th>City</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% restResults.forEach(function(spot) { %>
+                <tr>
+                  <td>
+                    <%= spot.name %>
+                  </td>
+                  <td>
+                    <%= spot.rating %>
+                  </td>
+                  <td>
+                    <%= spot.city %>
+                  </td>
+
+                </tr>
+                <% }); %>
+            </tbody>
+          </table>
+          <% } else { %>
+            <p>No tourist spots found in cities with an rating > <%= minRating || 3.5 %>.</p>
+            <% } %>
+
+
+
+
+
+
+
+
+              <!-- Display tourist spot information for the specified pincode -->
+              <% if (typeof touristSpotResult !=='undefined' && touristSpotResult.length> 0) { %>
+                <h2>Tourist Spots in Pincode <%= userPincode %>
+                </h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Spot ID</th>
+                      <th>Place Name</th>
+                      <th>Description</th>
+                      <th>Location</th>
+                      <th>Opening Hour</th>
+                      <th>Entry Fee</th>
+                      <th>Image</th>
+                      <th>District ID</th>
+                      <th>Pincode</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% touristSpotResult.forEach(function(spot) { %>
+                      <tr>
+                        <td>
+                          <%= spot.spot_id %>
+                        </td>
+                        <td>
+                          <%= spot.Place_name %>
+                        </td>
+                        <td>
+                          <%= spot.Description %>
+                        </td>
+                        <td>
+                          <%= spot.location %>
+                        </td>
+                        <td>
+                          <%= spot.opening_hour %>
+                        </td>
+                        <td>
+                          <%= spot.entry_fee %>
+                        </td>
+                        <td><img src="<%= spot.IMAGE %>" alt="<%= spot.Place_name %> Image"
+                            style="max-width: 100px; max-height: 100px;"></td>
+                        <td>
+                          <%= spot.district_id %>
+                        </td>
+                        <td>
+                          <%= spot.pincode %>
+                        </td>
+                      </tr>
+                      <% }); %>
+                  </tbody>
+                </table>
+                <% } else { %>
+                  <p>No tourist spots found in Pincode <%= userPincode %>.</p>
+                  <% } %>
+
+                    <!-- Display total entry fee information -->
+                    <% if (typeof TotalEntryFee !=='undefined' && TotalEntryFee.length> 0) { %>
+                      <!-- Display total entry fee  -->
+                      <h2>Total Entry Fee per person in pincode <%= userPincode%></h2>
+                      <table>
+                        <!-- Table header -->
+                        <thead>
+                          <tr>
+                            <th>District Name</th>
+                            <th>Total Entry Fee</th>
+                          </tr>
+                        </thead>
+                        <!-- Table body -->
+                        <tbody>
+                          <% TotalEntryFee.forEach(function(entry) { %>
+                            <tr>
+                              <td>
+                                <%= entry.district_name %>
+                              </td>
+                              <td>
+                                <%= entry.total_entry_fee %>
+                              </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                      </table>
+                      <% } else { %>
+                        <p>No data available for total entry fee in each district.</p>
+                        <% } %>
+
+
+                          <!-- You can add more HTML and EJS code here as needed -->
+
+</body>
+
+</html>

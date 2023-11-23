@@ -1,0 +1,63 @@
+<!-- customer_backup.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Backup</title>
+  <style>
+    body {
+      background-color: #ccc; /* Set a background color for the entire page */
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      color: #333; /* Set text color for the heading */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #fff; /* Set a white border for cells */
+      color: #fff; /* Set text color for cells */
+    }
+
+    th {
+      background-color: purple; /* Set purple background for header cells */
+    }
+
+    tr:nth-child(even) {
+      background-color: #7e57c2; /* Set a different background color for even rows */
+    }
+
+    tr:nth-child(odd) {
+      background-color: #673ab7; /* Set a different background color for odd rows */
+    }
+  </style>
+</head>
+<body>
+  <h1>Customer Backup Data</h1>
+  <table>
+    <tr>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Password</th>
+    </tr>
+    <% for (let i = 0; i < backups.length; i++) { %>
+      <tr>
+        <td><%= backups[i].email %></td>
+        <td><%= backups[i].name %></td>
+        <td><%= backups[i].password %></td>
+      </tr>
+    <% } %>
+  </table>
+</body>
+</html>

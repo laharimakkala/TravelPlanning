@@ -1,0 +1,129 @@
+<!-- admin_op.ejs -->
+
+<style>
+  body {
+    background-color: lightcyan;
+    color: black;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Style for forms */
+  form {
+    border: 2px solid black;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  /* Style for input fields */
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+
+  button {
+    background-color: mistyrose;
+    color: purple;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Style for displayed information in grid */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    border: 2px solid black;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  /* Style for displayed information labels */
+  strong {
+    display: block;
+    margin-bottom: 5px;
+  }
+</style>
+
+<h1>Admin Operations</h1>
+
+<!-- Form for inserting a new tourist spot (Create) -->
+<form action="/admin_op_rest/create" method="post">
+  <h2>Create New Restaurants</h2>
+  <label for="id">ID:</label>
+  <input type="text" name="id" required>
+  <label for="name">Name:</label>
+  <input type="text" name="name" required>
+  <label for="rating">Rating:</label>
+  <input type="text" name="rating" required>
+  <label for="street">Street:</label>
+  <textarea name="street" required></textarea>
+  <label for="city">City:</label>
+  <input type="text" name="city" required>
+  <label for="pincode">Pincode:</label>
+  <input type="text" name="pincode" required>
+  <label for="image">Image Link:</label>
+  <input type="text" name="image" required>
+  <label for="district_id">District ID:</label>
+  <input type="text" name="district_id" required>
+  <button type="submit">Create</button>
+</form>
+
+<!-- Display existing tourist spots with options to update and delete (Update and Delete) -->
+<ul>
+  <% restaurants.forEach(restaurants => { %>
+    <li>
+      <!-- Display information in a grid for Update and Delete -->
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+        <div>
+          <p><strong>ID:</strong><%= restaurants.id %></p>
+          <p><strong>Name:</strong><%= restaurants.name %></p>
+          <p><strong>Rating:</strong> <%= restaurants.rating %></p>
+          <p><strong>Street:</strong> <%= restaurants.street %></p>
+          <p><strong>City:</strong> <%= restaurants.city %></p>
+          <p><strong>Pincode:</strong> <%= restaurants.pincode %></p>
+        </div>
+
+        <!-- Form for updating a tourist spot -->
+        <form action="/admin_op_rest/update" method="post">
+          <label for="id">ID:</label>
+          <input type="text" name="id" value="<%= restaurants.id %>" required>
+          <label for="name">Name:</label>
+          <input type="text" name="name" value="<%= restaurants.name %>" required>
+          <label for="rating">Rating:</label>
+          <input type="text" name="rating" value="<%= restaurants.rating %>" required>
+          <label for="street">Street:</label>
+          <input type="text" name="street" value="<%= restaurants.street %>" required>
+          <label for="city">City:</label>
+          <textarea name="city" required><%= restaurants.city %></textarea>
+          <label for="pincode">Pincode:</label>
+          <input type="text" name="pincode" value="<%= restaurants.pincode %>" required>
+          <label for="image">Image URL:</label>
+          <input type="text" name="image" value="<%= restaurants.image_url %>" required>
+          <button type="submit">Update</button>
+        </form>
+
+        <!-- Form for deleting a tourist spot -->
+        <form action="/admin_op_rest/delete" method="post">
+          <input type="hidden" name="id" value="<%= restaurants.id %>">
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </li>
+  <% }); %>
+</ul>

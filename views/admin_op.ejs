@@ -1,0 +1,138 @@
+<!-- admin_op.ejs -->
+
+<style>
+  body {
+    background-color: LightCyan;
+    color: black;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Style for forms */
+  form {
+    border: 2px solid black;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  /* Style for input fields */
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  button {
+    background-color: MistyRose;
+    color: purple;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Style for displayed information in grid */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    border: 2px solid black;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  /* Style for displayed information labels */
+  strong {
+    display: block;
+    margin-bottom: 5px;
+  }
+</style>
+
+<h1>Admin Operations</h1>
+
+<div style="display: flex;">
+
+  <!-- Form for inserting a new tourist spot (Create) -->
+  <div style="width: 50%; margin-right: 20px;">
+    <form action="/admin_op/create" method="post">
+      <h2>Create Tourist Spot</h2>
+      <!-- Add your input fields for create here -->
+      <label for="name">Spot ID:</label>
+      <input type="text" name="id" required>
+      <label for="name">Name:</label>
+      <input type="text" name="name" required>
+      <label for="location">Location:</label>
+      <input type="text" name="location" required>
+      <label for="description">Description:</label>
+      <textarea name="description" required></textarea>
+      <label for="opening_hours">Opening Hours:</label>
+      <input type="text" name="opening_hours" required>
+      <label for="admission_fee">Admission Fee:</label>
+      <input type="text" name="admission_fee" required>
+      <label for="image">Image Link:</label>
+      <input type="text" name="image" required>
+      <label for="district_id">District ID:</label>
+      <input type="text" name="district_id" required>
+      <label for="pincode">Pincode:</label>
+      <input type="text" name="pincode" required>
+      <button type="submit">Create</button>
+    </form>
+  </div>
+
+  <!-- Display existing tourist spots with options to update and delete (Update and Delete) -->
+  <div style="width: 50%;">
+    <ul>
+      <% tourist_spots.forEach(tourist_spot => { %>
+        <li>
+          <!-- Display information in a grid for Update and Delete -->
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+            <div>
+              <p><strong>ID:</strong><%= tourist_spot.spot_id %></p>
+              <p><strong>Place:</strong><%= tourist_spot.Place_name %></p>
+              <p><strong>Location:</strong> <%= tourist_spot.location %></p>
+              <p><strong>Description:</strong> <%= tourist_spot.Description %></p>
+              <p><strong>Opening Hours:</strong> <%= tourist_spot.opening_hour %></p>
+              <p><strong>Admission Fee:</strong> <%= tourist_spot.entry_fee %></p>
+              <p><strong>Pincode:</strong> <%= tourist_spot.pincode %></p>
+            </div>
+
+            <!-- Form for updating a tourist spot -->
+            <form action="/admin_op/update" method="post">
+              <input type="hidden" name="id" value="<%= tourist_spot.spot_id %>">
+              <!-- Add your input fields for update here -->
+              <label for="name">Name:</label>
+              <input type="text" name="name" value="<%= tourist_spot.Place_name %>" required>
+              <label for="location">Location:</label>
+              <input type="text" name="location" value="<%= tourist_spot.location %>" required>
+              <label for="description">Description:</label>
+              <textarea name="description" required><%= tourist_spot.Description %></textarea>
+              <label for="opening_hours">Opening Hours:</label>
+              <input type="text" name="opening_hours" value="<%= tourist_spot.opening_hour %>" required>
+              <label for="admission_fee">Admission Fee:</label>
+              <input type="text" name="admission_fee" value="<%= tourist_spot.entry_fee %>" required>
+              <button type="submit">Update</button>
+            </form>
+
+            <!-- Form for deleting a tourist spot -->
+            <form action="/admin_op/delete" method="post">
+              <input type="hidden" name="id" value="<%= tourist_spot.spot_id %>">
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+</div>

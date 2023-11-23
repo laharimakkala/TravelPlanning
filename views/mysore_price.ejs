@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mysore Tourist Spots</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            color: #333;
+        }
+    
+        h1, h2 {
+            color: #007bff;
+            text-align: center;
+        }
+    
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 20px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+    
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    
+        .total-price {
+            color: #4caf50;
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            background-color: #ffeb3b;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+    
+        th {
+            background-color: #f2f2f2;
+        }
+    
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+        img.restaurant-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    
+        p {
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+
+    <h1>Calculate Total Price</h1>
+
+    <form action="/mysore_price" method="post">
+        <label for="hotelId">Hotel ID:</label>
+        <input type="text" id="hotelId" name="hotelId" required>
+
+        <label for="numberOfBeds">Number of Beds:</label>
+        <select id="numberOfBeds" name="numberOfBeds" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+        </select>
+
+        <label for="numberOfDays">Number of Days:</label>
+        <input type="text" id="numberOfDays" name="numberOfDays" required>
+
+        <!-- Add input field for number of rooms -->
+        <label for="numberOfRooms">Number of Rooms:</label>
+        <input type="text" id="numberOfRooms" name="numberOfRooms" required>
+
+        <button type="submit">Calculate Total Price</button>
+    </form>
+
+    <% if (hotels !== undefined && hotels.length > 0) { %>
+        <div>
+            <h2>All Hotels</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Rating</th>
+                        <th>Address</th>
+                        <th>Price per night</th>
+                        <!-- Add more table headers as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <% hotels.forEach(function(hotel) { %>
+                        <tr>
+                            <td><%= hotel.id %></td>
+                            <td><%= hotel.name %></td>
+                            <td><%= hotel.rating %></td>
+                            <td><%= hotel.street %>, <%= hotel.city %>, <%= hotel.pincode %></td>
+                            <td><%= hotel.price %></td>
+                            <!-- Add more hotel information fields as needed -->
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+
+    <p>The prices shown are for a single night and single bed. Additional charges will be applied for additional beds.</p>
+    <p>The hotels check-in time after 12pm and checkout before 12pm next day</p>
+
+    <% if (selectedHotel !== undefined) { %>
+        <div>
+            <h2>Selected Hotel Information</h2>
+            <p>Name: <%= selectedHotel.name %></p>
+            <p>Rating: <%= selectedHotel.rating %></p>
+            <p>Address: <%= selectedHotel.street %>, <%= selectedHotel.city %>, <%= selectedHotel.pincode %></p>
+            <p>Number: <%= selectedHotel.number %></p>
+            <img class="restaurant-image" src="<%= selectedHotel.image_url %>" alt="<%= selectedHotel.name %>">
+            <!-- Add more selected hotel information fields as needed -->
+        </div>
+    <% } %>
+
+    <% if (total_price !== undefined) { %>
+        <p class="total-price">Total Price: <%= total_price %></p>
+    <% } %>
+</body>
+
+</html>
